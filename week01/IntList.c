@@ -67,7 +67,7 @@ IntList getIntList (FILE *inf)
 void showIntList (IntList L)
 {
     IntListPrint (stdout, L);
-    printf("Size is %d\n",L->size);
+    //printf("Size is %d\n",L->size);
 }
 
 /** create a new IntListNode with value v
@@ -120,6 +120,7 @@ void IntListInsertInOrder (IntList L, int v)
                 if (curr->next->data > v){
                     new->next = curr->next;
                     curr->next = new;
+                    // exit loop when insertation is completed
                     break;
                 }
                 curr = curr->next;
