@@ -89,8 +89,8 @@ void IntListInsert (IntList L, int v)
     if (L->first == NULL)
         L->first = L->last = n;
     else {
-        L->last->next = n;
-        L->last = n;
+        L->last->next = n; // connects list L to new node
+        L->last = n; // moves Last pointer to new node
     }
     L->size++;
 }
@@ -99,7 +99,33 @@ void IntListInsert (IntList L, int v)
 void IntListInsertInOrder (IntList L, int v)
 {
     // This is INCORRECT
-    IntListInsert (L, v);
+    if (L->first == NULL){
+        //printf("first");
+        IntListInsert (L, v); // if L is empty just call IntListInsert
+    } else {
+        if (L->last->data <= v)
+            IntListInsert (L, v); // Assuming the list is sorted, we can append largest value at the end
+        else { //L->size++ at the end?
+            struct IntListNode *n = newIntListNode (v);
+            if (L->first->data >= v) {// new node to be added is smallest
+                n->next = L->first;
+                L->first = n;
+            } else {
+                struct IntListNode *curr = L->first; // iterator
+                curr = curr->next; // move one
+                //printf("Here");
+                for(int i = 1; i < L->size; i++){
+                    if (curr->next->data > v){
+                        n->next = curr->next;
+                        curr->next = n;
+                        break;
+                    }
+                    curr = curr->next;
+                }
+                L->size++;
+            }
+        }
+    }
 }
 
 /** Delete first occurrence of `v` from an IntList.
