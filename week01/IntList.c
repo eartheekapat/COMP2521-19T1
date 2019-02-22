@@ -67,6 +67,7 @@ IntList getIntList (FILE *inf)
 void showIntList (IntList L)
 {
     IntListPrint (stdout, L);
+    printf("Size is %d\n",L->size);
 }
 
 /** create a new IntListNode with value v
@@ -98,32 +99,32 @@ void IntListInsert (IntList L, int v)
 /** Insert an integer into correct place in a sorted IntList. */
 void IntListInsertInOrder (IntList L, int v)
 {
-    // This is INCORRECT
+    // Check if list is empty
     if (L->first == NULL){
-        //printf("first");
         IntListInsert (L, v); // if L is empty just call IntListInsert
+    // Check if new number is largest
+    } else if (L->last->data <= v) {
+        IntListInsert (L, v); // Append
     } else {
-        if (L->last->data <= v)
-            IntListInsert (L, v); // Assuming the list is sorted, we can append largest value at the end
-        else { //L->size++ at the end?
-            struct IntListNode *n = newIntListNode (v);
-            if (L->first->data >= v) {// new node to be added is smallest
-                n->next = L->first;
-                L->first = n;
-            } else {
-                struct IntListNode *curr = L->first; // iterator
-                curr = curr->next; // move one
-                //printf("Here");
-                for(int i = 1; i < L->size; i++){
-                    if (curr->next->data > v){
-                        n->next = curr->next;
-                        curr->next = n;
-                        break;
-                    }
-                    curr = curr->next;
+        struct IntListNode *new = newIntListNode (v); // create new node
+        // Check if new node is smallest
+        if (L->first->data >= v) {
+            new->next = L->first;
+            L->first = new;
+            L->size++;
+        } else {
+            // Create an iterator
+            struct IntListNode *curr = L->first;
+            // Iterate through the list
+            while (curr->next != NULL) {
+                if (curr->next->data > v){
+                    new->next = curr->next;
+                    curr->next = new;
+                    break;
                 }
-                L->size++;
+                curr = curr->next;
             }
+            L->size++;
         }
     }
 }
