@@ -25,4 +25,8 @@ Size	Order	Dups	of runs	forusel	forsort
 200000	sorted	yes	3	0.228 sec	0.0946 sec
 200000	reverse	yes	3	0.245 sec	0.108 sec
 
-The Unix sort method was always faster than linked-list sort. From the results, there seemed to be negligible differences between sorting with duplicates or without duplicates for both methods. When the input was 100000, IntList took almost 1 min to sort random number whereas sort barely took 1 second. This result was expected because the IntList logic required a computer to iterate until the insertion is done. The computation would take a long time if the number to be inserted is near the very end of the list. Unix sort uses a more efficient logic to sort. Sorting a sorted list and reversed list using IntList took similar time because there was no need to loop through the list. This saved a lot of computation time.
+The Unix sort method was always faster than linked-list sort. From the results, there seemed to be negligible differences between sorting with duplicates or without duplicates for both methods. 
+When the input was 100000, IntList took almost 1 min to sort random number whereas sort barely took 1 second. 
+This result was expected because the IntList logic required a computer to iterate until the insertion is done. 
+The computation would take a long time if the number to be inserted is near the very end of the list. Unix sort uses a more efficient logic to sort. 
+Sorting a sorted list and reversed list using IntList took similar time because there was no need to loop through the list. This saved a lot of computation time.
