@@ -13,17 +13,17 @@ Size	Order	Dups	of runs	forusel	forsort
 10000	sorted	yes	5	0.0296 sec	0.004 sec
 10000	reverse	yes	5	0.028 sec	0.0048 sec
 100000	random	no	3	58.76 sec	0.0906 sec
-100000	sorted	no	3	0.17 sec	0.003 sec
+100000	sorted	no	3	0.17 sec	0.041 sec
 100000	reverse	no	3	0.162 sec	0.052 sec
-100000	random	yes	N	T1sec	T2sec
-100000	sorted	yes	N	T1sec	T2sec
-100000	reverse	yes	N	T1sec	T2sec
+100000	random	yes	3	57.141 sec	0.1013 sec
+100000	sorted	yes	3	0.177 sec	0.04133 sec
+100000	reverse	yes	3	0.167 sec	0.05 sec
 200000	random	no	3	238.408 sec	0.2106 sec
 200000	sorted	no	3	0.272 sec	0.0896 sec
 200000	reverse	no	3	0.272 sec	0.10667 sec
-200000	random	yes	N	T1sec	T2sec
-200000	sorted	yes	N	T1sec	T2sec
-200000	reverse	yes	N	T1sec	T2sec
+200000	random	yes	3	236.72 sec	0.2106 sec
+200000	sorted	yes	3	0.228 sec	0.0946 sec
+200000	reverse	yes	3	0.245 sec	0.108 sec
 
 time ./useIntList < /tmp/nums > /tmp/out1
 time sort -n < /tmp/nums > /tmp/out2
