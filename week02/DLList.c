@@ -236,12 +236,16 @@ void DLListBefore (DLList L, char *it)
         new->prev = NULL;
     } else {
         if (L->curr->prev != NULL) {
+            // Inserting between
             new->next = L->curr;
             new->prev = L->curr->prev;
+            L->curr->prev->next = new;
+            L->curr->prev = new;
             L->curr = new;
         } else {
         //Insert at the beginning of the list
             new->next = L->curr;
+            L->curr->prev = new;
             L->first = L->curr = new;
         }
     }    
@@ -262,6 +266,8 @@ void DLListAfter (DLList L, char *it)
         if (L->curr->next != NULL) {
             new->next = L->curr->next;
             new->prev = L->curr;
+            L->curr->next->prev = new;
+            L->curr->next = new;
             L->curr = new;
         } else {
         // Insert as the last node of the list
