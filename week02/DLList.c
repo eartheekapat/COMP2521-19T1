@@ -228,6 +228,17 @@ void DLListBefore (DLList L, char *it)
 {
 	assert (L != NULL);
 	/// COMPLETE THIS FUNCTION
+	// TODO Empty List L
+	L->nitems++;
+    DLListNode *new = newDLListNode(it);
+    if (L->curr->prev != NULL) {
+		new->next = L->curr;
+		L->curr->prev->next = new;
+	} else {
+		//insert as first of the list
+		new->next = L->curr;
+		L->first = new;
+	}
 }
 
 /** insert an item after current item
