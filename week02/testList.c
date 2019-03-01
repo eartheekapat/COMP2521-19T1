@@ -1,6 +1,6 @@
 // testList.c - testing DLList data type
 // Written by John Shepherd, March 2013
-// Modified by Kanadech z5176970
+// Modified by Kanadech z5176970 cs2521 2019T1
 
 #include <assert.h>
 #include <stdio.h>
@@ -21,6 +21,11 @@ int main (void)
 {
 	DLList myList = getDLList (stdin);
 	test1(myList);
+	test2(myList);
+	DLListDelete(myList);
+	printList(myList);
+	assert(validDLList(myList));
+	freeDLList (myList);
 	return EXIT_SUCCESS;
 }
 /** Testing insert before and after 
@@ -83,8 +88,31 @@ void test1 (DLList myList){
 	printf("nItem is %d\n",(int)DLListLength(myList));
 	assert(validDLList(myList));
 	printf("\nTest 1 Completed\n");
+}
 
-	freeDLList (myList);
+/** Testing delete **/
+void test2 (DLList myList) {
+	
+	printf("Starting test 2\n");
+	printList(myList);
+	assert(validDLList(myList));
+	printf("Current is '%s' and size is %d\n", DLListCurrent(myList), (int)DLListLength(myList));
+
+	//Delete last and then first until the list is empty;
+	//And print the list at the end of every loop
+	while((int)DLListLength(myList)!=0) {
+		assert(!DLListIsEmpty(myList));
+		DLListMoveTo(myList,(int)DLListLength(myList));
+		DLListDelete(myList);
+		assert(validDLList(myList));
+		DLListMoveTo(myList,1);
+		DLListDelete(myList);
+		assert(validDLList(myList));
+		printList(myList);
+	}
+	assert(validDLList(myList));
+	assert(DLListIsEmpty(myList));
+	printf("\nTest 2 Completed\n");
 }
 
 /** Prints entire List in a certain format**/

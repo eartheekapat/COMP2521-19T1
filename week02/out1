@@ -34,4 +34,34 @@ a small file
 containing a few lines
 HELLLO
 of boring text
+> 12345667
+> > First line
+12345667
+8390120381
+this is
+a small file
+containing a few lines
+HELLLO
+of boring text
+> > > First line
+> > First line
+> 12345667
+> a small file
+> containing a few lines
+> HELLLO
+> first line again???
+First line
+12345667
+a small file
+containing a few lines
+HELLLO
+of boring text
+> > first line again???
+First line
+12345667
+a small file
+containing a few lines
+HELLLO
+GO AGANE
+of boring text
 > 

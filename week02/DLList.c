@@ -1,6 +1,7 @@
 // DLList.c - Implementation of doubly-linked list ADT
 // Written by John Shepherd, March 2013
 // Modified by John Shepherd, August 2014, August 2015
+// Modified by Kanadech z5176970 cs2521 2019T1
 
 #include <assert.h>
 #include <err.h>
@@ -286,34 +287,33 @@ void DLListAfter (DLList L, char *it)
 void DLListDelete (DLList L)
 {
     assert (L != NULL);
-    if (L->curr == NULL){
+    if (DLListIsEmpty(L)){
         //do nothing to an empty list
     } else {
-        
         // Create a temp pointer 
         DLListNode *temp = L->curr;
-        if (L->curr != L->last) {
-            if (L->curr == L->first) {
-                L->curr = L->curr->next;
-                L->first = L->curr;
-                //L->curr->next = L->curr->prev = NULL;
-                freeDLListNode(temp);
-            } else {
-                L->curr->next->prev = L->curr->prev;
-                L->curr->prev->next = L->curr->next;
-                L->curr = L->curr->next;
-                freeDLListNode(temp);
-            }
-        } else if (L->nitems == 1) {
-            //Only 1 item on the list
+        // If List only has 1 node
+        if(L->nitems==1){
             freeDLListNode(L->curr);
             L->first = L->curr = L->last = NULL;
-        } else {
-            //Curr is pointing to last
+        // If Current is first
+        } else if (L->curr == L->last){
             L->last = L->curr->prev;
             L->curr = L->last;
             L->curr->next = NULL;
             freeDLListNode(temp);
+        // If Current is last
+        } else if (L->curr == L->first) {
+            L->curr = L->first->next;
+            L->first = L->curr;
+            L->curr->prev = NULL;
+            freeDLListNode(temp);
+        // If Current is somewhere else
+        } else {
+            L->curr->next->prev = L->curr->prev;
+            L->curr->prev->next = L->curr->next;
+            L->curr = L->curr->next;
+            freeDLListNode(temp);            
         }
         L->nitems--;
     }
