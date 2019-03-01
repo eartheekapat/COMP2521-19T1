@@ -14,7 +14,7 @@ int main (void)
 	assert (validDLList (myList));
 
 	// TODO: more tests needed here
-
+    assert
 	freeDLList (myList);
 	return EXIT_SUCCESS;
 }

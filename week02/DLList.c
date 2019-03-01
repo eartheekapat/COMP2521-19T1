@@ -273,6 +273,7 @@ void DLListAfter (DLList L, char *it)
         // Insert as the last node of the list
             new->next = NULL;
             new->prev = L->curr;
+            L->curr->next = new;
             L->curr = L->last = new;
         }
     }
