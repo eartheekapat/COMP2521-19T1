@@ -1,0 +1,20 @@
+%
+i
+First line
+%
+n
+n
+a
+Hello
+%
+d
+%
+a
+HELLLO
+%
+-3
+i
+12345667
+%
+q
+
