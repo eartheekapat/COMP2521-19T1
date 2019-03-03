@@ -17,10 +17,14 @@ void test2 (DLList myList);
 /** Prints entire List in a certain format**/
 void printList (DLList myList);
 
+/** Tests from lab parther Farhan z5199861 **/
+void test_Farhan (DLList myList);
+
 int main (void)
 {
     DLList myList = getDLList (stdin);
     test1(myList);
+    test_Farhan(myList);
     test2(myList);
     DLListDelete(myList);
     printList(myList);
@@ -120,4 +124,69 @@ void printList (DLList myList) {
     printf("\n------\n");
     putDLList (stdout, myList);
     printf("------\n\n");
+}
+
+/** Tests from lab parther Farhan z5199861 **/
+void test_Farhan (DLList myList) {
+
+    size_t initial_size = DLListLength(myList);
+    
+    printf("----------\n");
+    printf("TEST 1 - DLListBefore - Insert before head of list\n");
+    
+    printf("----------\n");    
+    DLListBefore(myList , "NEW LINE BEFORE CURRENT HEAD");
+    assert(validDLList (myList));
+    putDLList(stdout , myList);
+    printf("----------\n");
+    
+    printf("TEST 2 - Remove head of list\n");
+    
+    printf("----------\n");
+    DLListDelete(myList);
+    assert(validDLList (myList));
+    putDLList(stdout , myList);
+    size_t new_size = DLListLength(myList);
+    assert(initial_size == new_size);
+    printf("----------\n");
+    
+    printf("TEST 3 - Remove node between head and tail of list\n");
+    
+    printf("----------\n");
+    DLListMove(myList , 3);
+    DLListDelete(myList);
+    new_size = DLListLength(myList);
+    assert(initial_size == new_size + 1);
+    assert(validDLList (myList));
+    putDLList(stdout , myList);
+    printf("----------\n");
+    
+    printf("TEST 4 - DLListAfter - Insert in front of new current after pervious delete\n");
+    
+    printf("----------\n");
+    DLListAfter(myList , "NEW LINE AFTER DELETE");
+    assert(validDLList (myList));
+    putDLList(stdout , myList);
+    printf("----------\n");
+    
+    printf("TEST 5 - DLListAfter - Insert in front of tail of list\n");
+    
+    printf("----------\n");
+    new_size = DLListLength(myList);
+    DLListMove(myList , (int) new_size);
+    DLListAfter(myList , "NEW LINE AT END");
+    assert(validDLList (myList));
+    putDLList(stdout , myList);
+    printf("----------\n");
+    
+    printf("TEST 6 - Remove tail of list\n");
+    
+    printf("----------\n");
+    DLListMove(myList , (int)new_size);
+    DLListDelete(myList);
+    assert(validDLList (myList));
+    putDLList(stdout , myList);
+    new_size = DLListLength(myList);
+    assert(initial_size == new_size);
+    printf("----------\n");
 }
