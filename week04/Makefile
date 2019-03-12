@@ -1,6 +1,6 @@
 # COMP2521 19T1 ... lab 4 code
 
-CC	= 2521 3c
+CC	=  clang #2521 3c
 LDLIBS	= -lbsd
 
 .PHONY: all

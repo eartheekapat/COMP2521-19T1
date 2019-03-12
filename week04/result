@@ -1,0 +1,72 @@
+Input: 200 Order: A Insert: L
+Average Comparisons = 206.72932330827066
+Depth = 200
+----------
+Input: 200 Order: P Insert: L
+Average Comparisons = 11.447368421052632
+Depth = 8
+----------
+Input: 200 Order: R Insert: L
+Average Comparisons = 14.740601503759398
+Depth = 15
+----------
+Input: 200 Order: A Insert: A
+Average Comparisons = 69.83082706766918
+Depth = 200
+----------
+Input: 200 Order: P Insert: A
+Average Comparisons = 46.30075187969925
+Depth = 128
+----------
+Input: 200 Order: R Insert: A
+Average Comparisons = 13.665413533834586
+Depth = 15
+----------
+Input: 200 Order: A Insert: B
+Average Comparisons = 14.868421052631579
+Depth = 14
+----------
+Input: 200 Order: P Insert: B
+Average Comparisons = 12.864661654135338
+Depth = 10
+----------
+Input: 200 Order: R Insert: B
+Average Comparisons = 11.973684210526315
+Depth = 9
+----------
+Input: 200 Order: A Insert: R
+Average Comparisons = 40.390977443609025
+Depth = 106
+----------
+Input: 200 Order: P Insert: R
+Average Comparisons = 29.037593984962406
+Depth = 72
+----------
+Input: 200 Order: R Insert: R
+Average Comparisons = 14.631578947368421
+Depth = 16
+----------
+Input: 200 Order: A Insert: S
+Average Comparisons = 14.469924812030076
+Depth = 200
+----------
+Input: 200 Order: P Insert: S
+Average Comparisons = 15.3796992481203
+Depth = 200
+----------
+Input: 200 Order: R Insert: S
+Average Comparisons = 18.3796992481203
+Depth = 14
+----------
+Input: 200 Order: A Insert: V
+Average Comparisons = 12.135338345864662
+Depth = 8
+----------
+Input: 200 Order: P Insert: V
+Average Comparisons = 12.706766917293233
+Depth = 9
+----------
+Input: 200 Order: R Insert: V
+Average Comparisons = 11.669172932330827
+Depth = 9
+----------

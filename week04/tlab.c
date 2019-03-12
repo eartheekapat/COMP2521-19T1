@@ -49,7 +49,12 @@ int main (int argc, char *argv[])
 			TreeNumNodes (mytree), N
 		);
 
-
+	//* Modified 
+	printf("%d\n",N);
+	printf("%c\n",order);
+	printf("%c\n",style);
+	//
+	
 	printf ("Tree:\n");
 	showTree (mytree);
 
@@ -145,9 +150,9 @@ static void runTests (Tree t, int *values, int N, char order)
 			if (TreeFind (t, values[x]))
 				ok++;
 		}
-		printf ("Search for %d values known to be in tree\n", N);
-		printf ("Found %d matches; ", ok);
-		printf ("%s\n", (ok == N) ? "ok" : "not ok");
+		// printf ("Search for %d values known to be in tree\n", N);
+		// printf ("Found %d matches; ", ok);
+		// printf ("%s\n", (ok == N) ? "ok" : "not ok");
 	}
 
 	// set up array of values *not* in tree
@@ -181,9 +186,9 @@ static void runTests (Tree t, int *values, int N, char order)
 			if (! TreeFind (t, not[i]))
 				ok++;
 
-		printf ("Search for %d values known to *not* be in tree\n", NN);
-		printf ("Found %d matches; ", NN - ok);
-		printf ("%s\n", (ok == NN) ? "ok" : "not ok");
+		// printf ("Search for %d values known to *not* be in tree\n", NN);
+		// printf ("Found %d matches; ", NN - ok);
+		// printf ("%s\n", (ok == NN) ? "ok" : "not ok");
 	}
 }
 
