@@ -10,7 +10,7 @@ with open("output", "r+") as f:
             print("Input:",Input,end=' ')
             print("Order:",Order,end=' ')
             print("Insert:",Method)
-            avg = (int(tList[2])+int(oList[2])-int(oList[2]))/(int(Input) + int(Input/3))
+            avg = (int(tList[2])-int(oList[2]))/(int(Input) + int(Input/3))
             print("Average Comparisons =",avg)
             print("Depth =",oList[1])
             print("----------")
