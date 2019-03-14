@@ -19,13 +19,13 @@ typedef struct MMListNode *Link;
 typedef struct MMListNode {
 	MailMessage data; // message associated with this list item
 	Link next;		  // pointer to node containing next element
-} MMListNode;
+} MMListNode;		  // declared as Link
 
 typedef struct MMListRep {
 	Link first; // node containing first value
 	Link last;  // node containing last value
 	Link curr;  // current node (for iteration)
-} MMListRep;
+} MMListRep;	// declared as MMList
 
 static Link newMMListNode (MailMessage mesg);
 
@@ -62,6 +62,7 @@ void showMMList (MMList L)
 
 // insert mail message in order
 // ordering based on MailMessageDateTime
+// TODO::
 void MMListInsert (MMList L, MailMessage mesg)
 {
 	assert (L != NULL);
@@ -71,6 +72,53 @@ void MMListInsert (MMList L, MailMessage mesg)
 
 	// You need to change the following and
 	// implement this function
+	
+	Link new = newMMListNode(mesg);
+	
+	// Empty list
+	if ((L->first == NULL) && (L->last == NULL)) {
+		L->first = L->last = L->curr = new;
+		// List with 1 node
+	// } else if (L->first == L->last) {
+	// 	if (DateTimeBefore(MailMessageDateTime(new->data),MailMessageDateTime(L->first->data))) {
+	// 		// Insert as first node
+	// 		new->next = L->first;
+	// 		L->first = new;
+	// 	} else {
+	// 		// Insert as last node
+	// 		L->last->next = new;
+	// 		L->last = new;
+	// 	}
+		
+	} else if (DateTimeBefore(MailMessageDateTime(new->data),MailMessageDateTime(L->first->data))) {
+			new->next = L->first;
+			L->first = new;
+	} else if (DateTimeAfter(MailMessageDateTime(new->data),MailMessageDateTime(L->last->data))) {
+			L->last->next = new;
+			L->last = new;
+	} else {
+		// There are probably at least 2 nodes in the list
+		// Insertion must be done in between
+		MMListStart(L);
+		DateTime insertDate = MailMessageDateTime(mesg);
+		DateTime prevDate = NULL;
+		Link prevNode = NULL;
+		
+		while(!MMListEnd(L)){
+			DateTime currDate = MailMessageDateTime(L->curr->data);
+			if (prevDate != NULL) {
+				if (DateTimeBefore(insertDate,currDate) && DateTimeAfter(insertDate,prevDate)) {
+					prevNode->next = new;
+					new->next = L->curr;
+					break;
+				}
+			}
+			prevDate = currDate;
+			prevNode = L->curr;
+			L->curr = L->curr->next;
+		}
+		
+	}
 }
 
 // create a new MMListNode for mail message
