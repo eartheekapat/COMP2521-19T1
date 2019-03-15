@@ -98,25 +98,11 @@ static MailMessage doMMTreeFind (Link t, char *id)
 MMTree MMTreeInsert (MMTree t, char *id, MailMessage mesg)
 {
 
-	// You need to implement this
-	// if (t->root == NULL) {
-	// 	t->root = newMMTNode (id,mesg);
-	// 	return t;
-	// } else if (strcmp(id,t->root->msgid) < 0) {
-	// 	t->root = t->root->left;
-	// 	// return MMTreeInsert(t,id,mesg);
-	// 	return MMTreeInsert(t,id,mesg);
-	// } else if (strcmp(id,t->root->msgid) > 0) {
-	// 	t->root = t->root->right;
-	// 	// return MMTreeInsert(t,id,mesg);
-	// 	return MMTreeInsert(t,id,mesg);
-	// } else {
-	// 	return t;
-	// }
 	t->root = MMTreeNodeInsert (t->root, id, mesg);
 	return t;
-
 }
+
+// Insert a new message into a tree root node
 
 static Link MMTreeNodeInsert (Link t, char *id, MailMessage mesg) {
 	if (t == NULL) {
@@ -125,9 +111,8 @@ static Link MMTreeNodeInsert (Link t, char *id, MailMessage mesg) {
 		t->left = MMTreeNodeInsert(t->left,id,mesg);
 	} else if (strcmp(id,t->msgid) > 0) {
 		t->right = MMTreeNodeInsert(t->right,id,mesg);
-	} else {
-		return t;
 	}
+	return t;
 }
 // make a new node containing a value
 // (this function is used only within the ADT)
