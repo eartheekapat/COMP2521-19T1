@@ -48,15 +48,15 @@ Depth = 27
 ----------
 Input: 5000 Order: A Insert: S
 Average Comparisons = 23.596459645964597
-Depth = 5000
+Depth = 33
 ----------
 Input: 5000 Order: P Insert: S
 Average Comparisons = 23.608460846084608
-Depth = 5000
+Depth = 29
 ----------
 Input: 5000 Order: R Insert: S
 Average Comparisons = 22.724872487248724
-Depth = 31
+Depth = 1149
 ----------
 Input: 5000 Order: A Insert: V
 Average Comparisons = 11.776327632763277

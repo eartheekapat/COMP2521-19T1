@@ -1,12 +1,12 @@
 #!/bin/sh
 
-size=5000
+size=200
 
 for insert in L A B R S V
 do
-	for order in A P R
+	for order in A #P R
 	do
-		if [ $order == "R" ]
+		if false  #$order == "R" ]
 		then
 			for seed in 1 2 3 4
 			do
@@ -16,8 +16,8 @@ do
 			done
 		else
 			echo ""
-			echo "Test: ./tlabM $size $order $insert"
-			echo "t" | ./tlabM $size $order $insert | grep -v Tree
+			echo "Test: ./tlab $size $order $insert"
+			echo "t" | ./tlab $size $order $insert | grep -v Tree
 		fi
 	done
 done

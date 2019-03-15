@@ -1,7 +1,7 @@
 oList = []
 tList = []
 counter = 1
-with open("output", "r+") as f:
+with open("outTask2", "r+") as f:
     data = f.readlines() # read the text file
     for line in data:
         if ">" in line:
@@ -12,7 +12,7 @@ with open("output", "r+") as f:
             print("Insert:",Method)
             avg = (int(tList[2])-int(oList[2]))/(int(Input) + int(Input/3))
             print("Average Comparisons =",avg)
-            print("Depth =",oList[1])
+            print("Depth =",tList[1])
             print("----------")
             oList.clear()
             tList.clear()

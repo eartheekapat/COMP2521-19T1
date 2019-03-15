@@ -7,17 +7,42 @@ Depth = depth of tree, Cost = average #comparisons per search
 Insert
 Method       Depth      Cost     Depth      Cost     Depth      Cost
 
-L         ________  ________  ________  ________  ________  ________
+L         	5000  		3114		13 		12    		28		16
 
-A         ________  ________  ________  ________  ________  ________
+A         	5000  		1886  		2954  	1115  		28  	16
 
-R         ________  ________  ________  ________  ________  ________
+R         	2492		952			1774	674			27		15
 
-B         ________  ________  ________  ________  ________  ________
+B         	206  		63  		20  	14  		23  	13
 
-S         ________  ________  ________  ________  ________  ________
+S         	33  		24  		29  	24  		1149  	23
 
-V         ________  ________  ________  ________  ________  ________
+V         	13  		12  		14  	12  		15  	12
 
 
 Notes (what the above indicates):
+
+	L = insert new values at the leaves (standard BST insert)
+	A = insert new values at the root
+	R = insert values by randomly choosing between L and A
+	B = insert at leaves, but periodically rebalance the tree
+	S = insert using the Splay Tree approach
+	V = insert using the AVL Tree approach
+
+Inserting in ascending order using L&A method makes searching rather costly.
+Because we are basically searching a linked list. Ascending linked list for L
+and descending linked list for A.
+
+Prefix order insert at leaves do not cost much because prefix ordered input ensures
+that the tree will be quite balanced. The same can be said for random order as well.
+The cost for prefix order insert at root is quite high because it involves lots of rotations
+after the insert is done.
+
+B insert method is rebalancing tree that peiodically partition the tree. This makes
+searching less costly as compared to previous insert methods.
+
+Splay tree is similar to cache. Most recent numbers will be closer to the root nodes making
+the cost to search the tree quite cheap.
+
+AVL tree is a self balancing tree thus the depths will be very close to log2(5000). Searching a
+balanced tree is efficient as seen from the numbers above.

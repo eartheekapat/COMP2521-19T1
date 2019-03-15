@@ -1,0 +1,7 @@
+modified tlab.c -> tlabM.c
+comment line 102 in Tree.c
+in shell script change tlab -> tlabM
+
+make
+sh runtests > outTask2
+python3 script.py > result 

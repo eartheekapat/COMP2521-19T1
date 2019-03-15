@@ -99,8 +99,8 @@ void showTree (Tree t)
 {
 	assert (t != NULL);
 	printf (
-		//"#nodes = %d,  depth = %d,  #compares = %d,  #rotates = %d\n",
-		"%d %d %d %d\n",
+		"#nodes = %d,  depth = %d,  #compares = %d,  #rotates = %d\n",
+		//"%d %d %d %d\n",
 		size (t->root),
 		depth (t->root),
 		t->ncompares,
@@ -164,8 +164,8 @@ void TreeInsert (Tree t, Item it)
 		break;
 	}
 
-	// printf("After inserting %d, tree is:\n",key(it));
-	// showTree(t);
+	//printf("After inserting %d, tree is:\n",key(it));
+	//showTree(t);
 }
 
 // Helpers: various styles of insert
