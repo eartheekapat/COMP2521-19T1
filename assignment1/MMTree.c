@@ -30,7 +30,7 @@ static Link newMMTNode (char *id, MailMessage message);
 static void doDropMMTree (Link t);
 static void doShowMMTree (Link t, int level);
 static MailMessage doMMTreeFind (Link t, char *id);
-
+static Link MMTreeNodeInsert (Link t, char *id, MailMessage mesg);
 // create a new empty MMTree
 MMTree newMMTree (void)
 {
@@ -97,11 +97,38 @@ static MailMessage doMMTreeFind (Link t, char *id)
 // message is indexed by a string ID
 MMTree MMTreeInsert (MMTree t, char *id, MailMessage mesg)
 {
-	// You need to implement this
 
-	return NULL;
+	// You need to implement this
+	// if (t->root == NULL) {
+	// 	t->root = newMMTNode (id,mesg);
+	// 	return t;
+	// } else if (strcmp(id,t->root->msgid) < 0) {
+	// 	t->root = t->root->left;
+	// 	// return MMTreeInsert(t,id,mesg);
+	// 	return MMTreeInsert(t,id,mesg);
+	// } else if (strcmp(id,t->root->msgid) > 0) {
+	// 	t->root = t->root->right;
+	// 	// return MMTreeInsert(t,id,mesg);
+	// 	return MMTreeInsert(t,id,mesg);
+	// } else {
+	// 	return t;
+	// }
+	t->root = MMTreeNodeInsert (t->root, id, mesg);
+	return t;
+
 }
 
+static Link MMTreeNodeInsert (Link t, char *id, MailMessage mesg) {
+	if (t == NULL) {
+		return newMMTNode (id,mesg);
+	} else if (strcmp(id,t->msgid) < 0) {
+		t->left = MMTreeNodeInsert(t->left,id,mesg);
+	} else if (strcmp(id,t->msgid) > 0) {
+		t->right = MMTreeNodeInsert(t->right,id,mesg);
+	} else {
+		return t;
+	}
+}
 // make a new node containing a value
 // (this function is used only within the ADT)
 static Link newMMTNode (char *id, MailMessage message)
