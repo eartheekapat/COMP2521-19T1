@@ -25,7 +25,8 @@
 #     -fno-omit-frame-pointer       leave stack frame pointers in
 #     -fno-optimize-sibling-calls   don't try tail-call optimisation
 #
-CC	 = 2521 3c
+CC	 =  gcc #2521 3c
+CFLAGS = -Wall -std=gnu11 -g
 
 .PHONY: all
 all:	task1 task2 task3

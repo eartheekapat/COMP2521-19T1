@@ -32,7 +32,8 @@ typedef struct ThreadTreeRep {
 
 static void doDropThreadTree (Link t);
 static void doShowThreadTree (Link t, int level);
-
+static Link newThreadTreeNode (MailMessage mesg);
+static void ThreadTreeInsertTopLevel (ThreadTree t, MailMessage m);
 // END auxiliary data structures and functions
 
 // create a new empty ThreadTree
@@ -87,6 +88,39 @@ static void doShowThreadTree (Link t, int level)
 ThreadTree ThreadTreeBuild (MMList mesgs, MMTree msgids)
 {
 	// You need to implement this
+	ThreadTree tree = newThreadTree();
+	MMListStart(mesgs);
+	while(!MMListEnd(mesgs)) {
+		MailMessage m = MMListNext(mesgs);
+		if (MailMessageRepliesTo(m) == NULL) {
+			// Insert top level list
+			ThreadTreeInsertTopLevel(tree,m);
+		} else {
+			// Traverse through the tree to insert
+		}
+	}
+	return tree; // change this line
+}
 
-	return NULL; // change this line
+static Link newThreadTreeNode (MailMessage mesg) 
+{
+	Link new = malloc (sizeof (ThreadTreeNode));
+	if (new == NULL) err (EX_OSERR, "couldn't allocate ThreadTree node");
+	//*new = (ThreadTreeNode) {.mesg = mesg};
+	new->mesg = mesg;
+	new->next = new->replies = NULL;
+	return new;
+}
+
+static void ThreadTreeInsertTopLevel (ThreadTree t, MailMessage m) {
+	Link new = newThreadTreeNode(m);
+	if (t->messages == NULL) {
+		t->messages = new;
+	} else {
+		Link curr = t->messages;
+		while(curr->next != NULL) {
+			curr = curr->next;
+		}
+		curr->next = new;
+	}
 }

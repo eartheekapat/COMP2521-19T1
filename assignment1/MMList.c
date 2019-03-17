@@ -78,17 +78,6 @@ void MMListInsert (MMList L, MailMessage mesg)
 	// Empty list
 	if ((L->first == NULL) && (L->last == NULL)) {
 		L->first = L->last = L->curr = new;
-		// List with 1 node
-	// } else if (L->first == L->last) {
-	// 	if (DateTimeBefore(MailMessageDateTime(new->data),MailMessageDateTime(L->first->data))) {
-	// 		// Insert as first node
-	// 		new->next = L->first;
-	// 		L->first = new;
-	// 	} else {
-	// 		// Insert as last node
-	// 		L->last->next = new;
-	// 		L->last = new;
-	// 	}
 		
 	} else if (DateTimeBefore(MailMessageDateTime(new->data),MailMessageDateTime(L->first->data))) {
 			new->next = L->first;
