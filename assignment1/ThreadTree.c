@@ -24,6 +24,7 @@ typedef struct ThreadTreeNode {
 
 typedef struct ThreadTreeRep {
 	Link messages;
+	Link curr;
 } ThreadTreeRep;
 
 // Auxiliary data structures and functions
@@ -34,6 +35,9 @@ static void doDropThreadTree (Link t);
 static void doShowThreadTree (Link t, int level);
 static Link newThreadTreeNode (MailMessage mesg);
 static void ThreadTreeInsertTopLevel (ThreadTree t, MailMessage m);
+//static Link ThreadTreeSearchMessage (Link t, MailMessage m);
+static void ThreadTreeInsertReply (Link t, MailMessage m);
+static void ThreadTreeTraverse (ThreadTree tree, Link t, MailMessage m);
 // END auxiliary data structures and functions
 
 // create a new empty ThreadTree
@@ -97,9 +101,16 @@ ThreadTree ThreadTreeBuild (MMList mesgs, MMTree msgids)
 			ThreadTreeInsertTopLevel(tree,m);
 		} else {
 			// Traverse through the tree to insert
+			//tree->messages = ThreadTreeInsertReply(tree->messages,m);
+			//Link ptr = ThreadTreeSearchMessage(tree->messages, m);
+			//showMailMessage(ptr->mesg,2);
+
+			//ThreadTreeInsertReply(ptr,m);
+			ThreadTreeTraverse(tree,tree->messages,m);
+			ThreadTreeInsertReply(tree->curr,m);
 		}
 	}
-	return tree; // change this line
+	return tree;
 }
 
 static Link newThreadTreeNode (MailMessage mesg) 
@@ -122,5 +133,50 @@ static void ThreadTreeInsertTopLevel (ThreadTree t, MailMessage m) {
 			curr = curr->next;
 		}
 		curr->next = new;
+	}
+}
+
+// static Link ThreadTreeSearchMessage (Link t, MailMessage m) {
+// 	// Link curr = t;
+// 	// if (strcmp(MailMessageID(t->mesg),MailMessageRepliesTo(m)) == 0){
+// 	// 	return curr;
+// 	// } else if (t->next != NULL) {
+// 	// 	curr = ThreadTreeSearchMessage (curr->next, m);
+// 	// } else if (t->replies != NULL) {
+// 	// 	curr = ThreadTreeSearchMessage (curr->replies, m);
+// 	// }
+// 	// return curr;
+// 	if (strcmp(MailMessageID(t->mesg),MailMessageRepliesTo(m)) == 0){
+// 		return t;
+// 	} else if (t->next != NULL) {
+// 		return ThreadTreeSearchMessage (t->next, m);
+// 	} else if (t->replies != NULL) {
+// 		return ThreadTreeSearchMessage (t->replies, m);
+// 	} else {
+// 		return t;
+// 	}
+// }
+static void ThreadTreeInsertReply (Link t, MailMessage m) {
+	Link new = newThreadTreeNode(m);
+	if(t->replies == NULL){
+		t->replies = new;
+	} else {
+		Link curr = t->replies;
+		while (curr->next != NULL) {
+			curr = curr->next;
+		}
+		curr->next = new;
+	}
+}
+
+static void ThreadTreeTraverse (ThreadTree tree, Link t, MailMessage m) {
+	if (strcmp(MailMessageID(t->mesg),MailMessageRepliesTo(m)) == 0){
+		tree->curr = t;	
+	}
+	if (t->next != NULL) {
+		ThreadTreeTraverse(tree,t->next,m);
+	}
+	if (t->replies != NULL) {
+		ThreadTreeTraverse(tree,t->replies,m);
 	}
 }
