@@ -31,8 +31,7 @@ static void addConnections(Map);
 
 // Create a new empty graph (for a map)
 // #Vertices always same as NUM_PLACES
-Map
-newMap (void)
+Map newMap (void)
 {
 	Map g = malloc (sizeof *g);
 	if (g == NULL) err (EX_OSERR, "couldn't allocate Map");
@@ -63,6 +62,7 @@ void dropMap (Map g)
 	}
 	free (g);
 }
+
 
 static VList insertVList (VList L, LocationID v, TransportID type)
 {
@@ -143,6 +143,12 @@ static void addConnections (Map g)
 int connections (Map g, LocationID start, LocationID end, TransportID type[])
 {
 	assert (g != NULL);
-	// TODO: complete this fucntion
-	return 0;  // to keep the compiler happy
+	int i = 0;
+	for (VList curr = g->connections[start]; curr!=NULL; curr = curr->next){
+		if(curr->v == end){
+			type[i] = curr->type;
+			i++;
+		}
+	}
+	return i;
 }
