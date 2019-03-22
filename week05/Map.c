@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sysexits.h>
+#include <string.h>
 
 #include "Map.h"
 #include "Places.h"
@@ -144,11 +145,23 @@ int connections (Map g, LocationID start, LocationID end, TransportID type[])
 {
 	assert (g != NULL);
 	int i = 0;
-	for (VList curr = g->connections[start]; curr!=NULL; curr = curr->next){
+
+	for (VList curr = g->connections[start]; curr!=NULL; curr = curr->next) {
 		if(curr->v == end){
 			type[i] = curr->type;
 			i++;
+			
+		}
+		if(idToType(curr->v) == SEA) {
+			char *name = idToName(curr->v);
+			for (VList curr2 = g->connections[end]; curr2!= NULL; curr2 = curr2->next) {
+				if(strcmp(name,idToName(curr2->v))==0) {
+					type[i] = BOAT;
+					i++;
+				}
+			}
 		}
 	}
 	return i;
 }
+
