@@ -24,7 +24,9 @@ int main (void)
 	printf ("Tree:\n");
 	showBSTree (T);
 	printf ("\n#nodes = %d,  ", BSTreeNumNodes (T));
+    printf ("#inNodes = %d ", BSTreeInternalNodes (T));
 	printf ("#leaves = %d\n", BSTreeNumLeaves (T));
+    
 
 	printf ("Infix  : "); BSTreeInfix (T); printf ("\n");
 	printf ("Prefix : "); BSTreePrefix (T); printf ("\n");

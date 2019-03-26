@@ -127,6 +127,12 @@ int BSTreeNumLeaves (BSTree t)
 	 }
 }
 
+int BSTreeInternalNodes (BSTree t)
+{
+    if (t==NULL) return 0;
+    if (t->left == NULL && t->right == NULL) return 0;
+    return BSTreeInternalNodes(t->left)+BSTreeInternalNodes(t->right)+1;
+}
 
 // insert a new value into a BSTree
 BSTree BSTreeInsert (BSTree t, int v)

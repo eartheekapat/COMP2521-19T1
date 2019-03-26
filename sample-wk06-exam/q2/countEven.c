@@ -33,9 +33,7 @@ int countEven(BSTree t){
 	// Implement this function, 
 	// also change the return value below!
 
-
 	return countEven(t->left)+countEven(t->right)+count;
-
 }
 
 

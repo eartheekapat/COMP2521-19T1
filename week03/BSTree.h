@@ -35,4 +35,6 @@ int BSTreeFind (BSTree, int);
 // delete a value from a BSTree
 BSTree BSTreeDelete (BSTree, int);
 
+int BSTreeInternalNodes (BSTree);
+
 #endif
