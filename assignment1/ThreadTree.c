@@ -44,7 +44,7 @@ static void ThreadTreeInsertTopLevel (ThreadTree t, MailMessage m);
 static void ThreadTreeInsertReply (Link t, MailMessage m);
 
 // Trasverse the ThreadTree and find the replyTo node
-static void ThreadTreeTraverse (ThreadTree tree, Link t, MailMessage m);
+static void ThreadTreeTraverse (ThreadTree tree, Link t, MailMessage m, int found);
 // END auxiliary data structures and functions
 
 // create a new empty ThreadTree
@@ -111,7 +111,8 @@ ThreadTree ThreadTreeBuild (MMList mesgs, MMTree msgids)
             ThreadTreeInsertTopLevel(tree,m);
         } else {
             // Traverse through the tree to insert
-            ThreadTreeTraverse(tree,tree->messages,m);
+            // found flag = 0 initially
+            ThreadTreeTraverse(tree,tree->messages,m,0);
             // Insert the message
             ThreadTreeInsertReply(tree->ptr,m);
         }
@@ -157,17 +158,17 @@ static void ThreadTreeInsertReply (Link t, MailMessage m) {
     }
 }
 
-// Trasverse the ThreadTree and find the replyTo node
-static void ThreadTreeTraverse (ThreadTree tree, Link t, MailMessage m) {
-    // If found matching detail, set tree->ptr to that node else keep searching
-    if (strcmp(MailMessageID(t->mesg),MailMessageRepliesTo(m)) == 0){
-        tree->ptr = t;
-    }
-    if (t->next != NULL) {
-        ThreadTreeTraverse(tree,t->next,m);
-    }
-    if (t->replies != NULL) {
-        ThreadTreeTraverse(tree,t->replies,m);
-    }
-}
 
+// Trasverse the ThreadTree and find the replyTo node
+static void ThreadTreeTraverse (ThreadTree tree, Link t, MailMessage m, int found) {
+    // If found matching detail, set tree->ptr to that node else keep searching
+    // set found flag to minimize traversal
+    if (found) return;
+    if (t==NULL) return;
+    if (strcmp(MailMessageID(t->mesg),MailMessageRepliesTo(m)) == 0) {
+        tree->ptr = t;
+        found = 1;
+    }
+    ThreadTreeTraverse(tree,t->next,m,found);
+    ThreadTreeTraverse(tree,t->replies,m,found);
+}
