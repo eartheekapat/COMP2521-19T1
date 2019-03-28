@@ -36,5 +36,7 @@ int BSTreeFind (BSTree, int);
 BSTree BSTreeDelete (BSTree, int);
 
 int BSTreeInternalNodes (BSTree);
-
+int nodeDepth (BSTree t, int key);
+int BSTreeMaxBranchLen(BSTree t);
+int BSTWidth (BSTree t)
 #endif

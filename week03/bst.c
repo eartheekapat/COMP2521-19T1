@@ -7,7 +7,7 @@
 #include "BSTree.h"
 
 #define MAXVALS 1000
-
+#define key 6
 int main (void)
 {
 	// Build tree from values in stdin
@@ -25,6 +25,8 @@ int main (void)
 	showBSTree (T);
 	printf ("\n#nodes = %d,  ", BSTreeNumNodes (T));
     printf ("#inNodes = %d ", BSTreeInternalNodes (T));
+	printf ("nodeDepth,%d = %d ", key,nodeDepth(T,key));
+	printf ("Max length = %d ", BSTreeMaxBranchLen(T));
 	printf ("#leaves = %d\n", BSTreeNumLeaves (T));
     
 

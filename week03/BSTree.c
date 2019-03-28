@@ -134,6 +134,43 @@ int BSTreeInternalNodes (BSTree t)
     return BSTreeInternalNodes(t->left)+BSTreeInternalNodes(t->right)+1;
 }
 
+int nodeDepth (BSTree t, int key){
+	if (t == NULL) return -1;
+	if (t->value == key) {
+		return 0;
+	} else if (key < t->value) {
+		int ndl = nodeDepth (t->left, key);
+		if (ndl == -1) return -1;
+		return ndl + 1;
+	} else {
+		int ndr = nodeDepth (t->right, key);
+		if (ndr == -1) return -1;
+		return ndr + 1;
+	}
+}
+
+int BSTreeMaxBranchLen(BSTree t){
+	if (t == NULL) return 0;
+	if (t->left == NULL && t->right == NULL) return 0;
+	int l = BSTreeMaxBranchLen(t->left);
+	int r = BSTreeMaxBranchLen(t->right);
+	if (l>r)
+		return l+1;
+	else 
+		return r+1;
+}
+
+// pretty much counting number of nodes times 3
+int BSTWidth (BSTree t)
+{
+	if (t == NULL)
+		return 0;
+	else if (t->left == NULL && t->right == NULL)
+		return 3;
+	else
+		return 3 + BSTWidth (t->left) + BSTWidth (t->right);
+}
+
 // insert a new value into a BSTree
 BSTree BSTreeInsert (BSTree t, int v)
 {
