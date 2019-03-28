@@ -27,6 +27,7 @@ int main (void)
     printf ("#inNodes = %d ", BSTreeInternalNodes (T));
 	printf ("nodeDepth,%d = %d ", key,nodeDepth(T,key));
 	printf ("Max length = %d ", BSTreeMaxBranchLen(T));
+	printf ("Num prime = %d ",BSTreePrime(T));
 	printf ("#leaves = %d\n", BSTreeNumLeaves (T));
     
 

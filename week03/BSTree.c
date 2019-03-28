@@ -198,6 +198,16 @@ int BSTreeFind (BSTree t, int v)
 		return 1;
 }
 
+int BSTreePrime (BSTree t) {
+	if (t == NULL)	return 0;
+	int prime = 1;
+	for (int loop = 2; loop < t->value; loop++){
+		if (t->value%loop == 0) prime = 0;
+	}
+	if (t->value==1) prime = 0;
+	return BSTreePrime(t->left)+BSTreePrime(t->right)+prime;
+}
+
 // delete a value from a BSTree
 BSTree BSTreeDelete (BSTree t, int v)
 {

@@ -38,5 +38,6 @@ BSTree BSTreeDelete (BSTree, int);
 int BSTreeInternalNodes (BSTree);
 int nodeDepth (BSTree t, int key);
 int BSTreeMaxBranchLen(BSTree t);
-int BSTWidth (BSTree t)
+int BSTWidth (BSTree t);
+int BSTreePrime (BSTree t);
 #endif
