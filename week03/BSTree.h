@@ -40,4 +40,5 @@ int nodeDepth (BSTree t, int key);
 int BSTreeMaxBranchLen(BSTree t);
 int BSTWidth (BSTree t);
 int BSTreePrime (BSTree t);
+int isBST(BSTree, int left,int right);
 #endif

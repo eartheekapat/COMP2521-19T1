@@ -208,6 +208,12 @@ int BSTreePrime (BSTree t) {
 	return BSTreePrime(t->left)+BSTreePrime(t->right)+prime;
 }
 
+int isBST (BSTree t,int left,int right) {
+	if (t==NULL) return true;
+	if (t->value < left || t->value > right) return false;
+	return isBST(t->left,left,t->value) && isBST(t->right,t->value,right);
+}
+
 // delete a value from a BSTree
 BSTree BSTreeDelete (BSTree t, int v)
 {

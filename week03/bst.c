@@ -25,9 +25,10 @@ int main (void)
 	showBSTree (T);
 	printf ("\n#nodes = %d,  ", BSTreeNumNodes (T));
     printf ("#inNodes = %d ", BSTreeInternalNodes (T));
-	printf ("nodeDepth,%d = %d ", key,nodeDepth(T,key));
+	printf ("nodeDepth (%d) = %d ", key,nodeDepth(T,key));
 	printf ("Max length = %d ", BSTreeMaxBranchLen(T));
 	printf ("Num prime = %d ",BSTreePrime(T));
+	printf ("BST? = %d ",isBST(T,-100000000,100000000));
 	printf ("#leaves = %d\n", BSTreeNumLeaves (T));
     
 
