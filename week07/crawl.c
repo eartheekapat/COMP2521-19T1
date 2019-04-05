@@ -60,23 +60,42 @@ int main (int argc, char **argv)
 	//    close the opened URL
 	//    sleep(1)
 	// }
-	if (!(handle = url_fopen (firstURL, "r"))) {
-		fprintf (stderr, "Couldn't open %s\n", next);
-		exit (1);
-	}
-	while (!url_feof (handle)) {
-		url_fgets (buffer, sizeof (buffer), handle);
-		// fputs(buffer,stdout);
-		int pos = 0;
-		char result[BUFSIZE];
-		memset (result, 0, BUFSIZE);
-		while ((pos = GetNextURL (buffer, firstURL, result, pos)) > 0) {
-			printf ("Found: '%s'\n", result);
-			memset (result, 0, BUFSIZE);
+	Stack stack1 = newStack();
+	Graph graph1 = newGraph(maxURLs);
+	Set set1 = newSet();
+	pushOnto(stack1,firstURL);
+	insertInto(set1,firstURL);
+	while (!emptyStack(stack1) && nVertices(graph1) <= maxURLs){
+		strcpy(firstURL,popFrom(stack1));
+		if (!(handle = url_fopen (firstURL, "r"))) {
+			fprintf (stderr, "Couldn't open %s\n", next);
+			exit (1);
 		}
+		while (!url_feof (handle)) {
+			url_fgets (buffer, sizeof (buffer), handle);
+			// fputs(buffer,stdout);
+			int pos = 0;
+			char result[BUFSIZE];
+			memset (result, 0, BUFSIZE);
+			while ((pos = GetNextURL (buffer, firstURL, result, pos)) > 0) {
+				printf ("Found: '%s'\n", result);
+				if (nVertices(graph1)<= maxURLs || (isElem(set1,firstURL) && isElem(set1,result))){
+					addEdge(graph1,firstURL,result);
+				}
+				if (!isElem(set1,result)){
+					insertInto(set1,result);
+					pushOnto(stack1,result);
+				}
+				memset (result, 0, BUFSIZE);
+			}
+		}
+		url_fclose (handle);
+		sleep (1);
 	}
-	url_fclose (handle);
-	sleep (1);
+	showGraph(graph1,1);
+	dropStack(stack1);
+	dropSet(set1);
+	dropGraph(graph1);
 	return 0;
 }
 
