@@ -16,6 +16,8 @@ typedef struct GraphRep {
 	int **edges; // matrix of weights (0 == no edge)
 } GraphRep;
 
+static int makepath(int *path,int *pred, Vertex dest,int i);
+
 // check validity of Vertex
 int validV (Graph g, Vertex v)
 {
@@ -110,5 +112,35 @@ void showGraph (Graph g, char **names)
 int findPath (Graph g, Vertex src, Vertex dest, int max, int *path)
 {
 	assert (g != NULL);
-	return 0; // never find a path ... you need to fix this
+	int *visited = calloc(g->nV,sizeof(int));
+	int *pred = calloc(g->nV,sizeof(int));
+	for(int i=0; i<g->nV; i++){
+		pred[i] = -1;
+	}
+	Queue q = newQueue();
+	visited[src] = 1;
+	QueueJoin(q,src);
+	
+	while(!QueueIsEmpty(q)){
+		Item current = QueueLeave(q);
+		for (Item next = 0; next < g->nV; next++){
+			if(g->edges[current][next]!=0 && (int)(g->edges[current][next]*160.934) < max){
+				if(!visited[next]){
+					//TO PREVENT GOING BACK
+					visited[next] = 1;
+					pred[next] = current;
+					//if(next == src) break;
+					QueueJoin(q,next);
+				}
+			}
+		}
+	}
+	
+	int total = makepath(path,pred,dest,0);
+
+	return path;
+}
+
+static int makepath(int *path,int *pred, Vertex dest,int i){
+
 }
