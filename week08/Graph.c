@@ -16,8 +16,8 @@ typedef struct GraphRep {
 	int **edges; // matrix of weights (0 == no edge)
 } GraphRep;
 
-static int makepath(int *path,int *pred, Vertex dest,int i);
-
+static int makepath(int *path,int *pred, Vertex dest);
+static void reverseArray(int arr[], int start, int end);
 // check validity of Vertex
 int validV (Graph g, Vertex v)
 {
@@ -124,23 +124,68 @@ int findPath (Graph g, Vertex src, Vertex dest, int max, int *path)
 	while(!QueueIsEmpty(q)){
 		Item current = QueueLeave(q);
 		for (Item next = 0; next < g->nV; next++){
-			if(g->edges[current][next]!=0 && (int)(g->edges[current][next]*160.934) < max){
+			//printf("Dis %d\n",(int)(g->edges[current][next]));
+			if(g->edges[current][next]!=0 && (int)(g->edges[current][next]) < max){
 				if(!visited[next]){
 					//TO PREVENT GOING BACK
 					visited[next] = 1;
 					pred[next] = current;
+					//printf("We come to %d via %d\n",next,current);
 					//if(next == src) break;
+					//printf("%d JOIN THE Q\n",next);
 					QueueJoin(q,next);
 				}
 			}
 		}
 	}
+	// printf("~~~~~~~~~~~~~~~~~\n");
+	// for (int i = 0;i<30; i++){
+	// 	printf("Pred[%d] = %d\n",i,pred[i]);
+	// }
+
+	int i = 0;
+	path[i] = dest;
+	i++;
+	Vertex temp = dest;
+	while(temp!=-1){
+		path[i] = pred[temp];
+		temp = pred[temp];
+		i++;
+	}
+	i--;
+	reverseArray(path,0,i-1);
+	// int total = makepath(path,pred,dest);
+	// if(total > 0){
+	// 	path[0] = src;
+	// 	total++;
+	// }
+	// printf("Total %d\n",total);
+	free(visited);
+	free(pred);
+	dropQueue(q);
+	return i;
+}
+
+static int makepath(int *path,int *pred, Vertex dest){
+
+	if(pred[dest] == -1){
+		return 1;
+	}
+	int a = makepath(path,pred,pred[dest]);
 	
-	int total = makepath(path,pred,dest,0);
-
-	return path;
+	path[a] = dest;
+	printf("Path[%d] = %d\n",a,dest);
 }
 
-static int makepath(int *path,int *pred, Vertex dest,int i){
-
-}
+static void reverseArray(int arr[], int start, int end) 
+{ 
+    int temp; 
+    while (start < end) 
+    { 
+        temp = arr[start];    
+        arr[start] = arr[end]; 
+        arr[end] = temp; 
+        start++; 
+        end--; 
+    }    
+}      
