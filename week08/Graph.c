@@ -138,43 +138,28 @@ int findPath (Graph g, Vertex src, Vertex dest, int max, int *path)
 			}
 		}
 	}
-	// printf("~~~~~~~~~~~~~~~~~\n");
-	// for (int i = 0;i<30; i++){
-	// 	printf("Pred[%d] = %d\n",i,pred[i]);
-	// }
 
-	int i = 0;
-	path[i] = dest;
-	i++;
-	Vertex temp = dest;
-	while(temp!=-1){
-		path[i] = pred[temp];
-		temp = pred[temp];
-		i++;
+	int total = makepath(path,pred,dest);
+	if(total > 0 || src == dest){
+		path[0] = src;
+		total++;
 	}
-	i--;
-	reverseArray(path,0,i-1);
-	// int total = makepath(path,pred,dest);
-	// if(total > 0){
-	// 	path[0] = src;
-	// 	total++;
-	// }
-	// printf("Total %d\n",total);
 	free(visited);
 	free(pred);
 	dropQueue(q);
-	return i;
+	return total;
 }
 
 static int makepath(int *path,int *pred, Vertex dest){
 
 	if(pred[dest] == -1){
-		return 1;
+		return 0;
 	}
-	int a = makepath(path,pred,pred[dest]);
-	
+	int a = makepath(path,pred,pred[dest])+1;
+	//printf("a=%d\n",a);
 	path[a] = dest;
-	printf("Path[%d] = %d\n",a,dest);
+	//printf("Path[%d] = %d\n",a,dest);
+	return a;
 }
 
 static void reverseArray(int arr[], int start, int end) 
