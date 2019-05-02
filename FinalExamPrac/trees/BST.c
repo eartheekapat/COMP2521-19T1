@@ -50,6 +50,10 @@ static int minTree(Tree t) {
   if(resR < res && resR != -1 ) { res = resR; }
   return res;
 }
+
+Tree min(Tree t){
+  return (t->left)? min(t->left) : t;
+}
 /* 
  * Easy Questions 
  */
@@ -122,9 +126,21 @@ int isBST(Tree t) {
 /*
  * Given a pointer to a node in the tree, return its in order successor node in the tree, that is the node in the tree whose value is the smallest value larger than the value of the given node. If no successor node exists return NULL.
  */
+Tree succ(Tree t, int v){
+  Tree res = NULL;
+  if (v < t->val) {
+    res = succ(t->left,v);
+
+    //Collaspe
+    if(res == NULL) res = t;
+  } else if (v >t->val){
+    res = succ(t->right,v);
+  }
+  return res;
+}
 
 Tree successor(Tree t, Tree target) {
-  return NULL;
+  return (target->right) ? min(target->right) : succ(t, target->val);
 }
 
 /* 
@@ -141,6 +157,27 @@ Tree successor(Tree t, Tree target) {
     and that 0 <= k < n where n is the number of nodes in the tree
 */
 void getKthSmallest(Tree t, int* k, int** v) {
+  if (t == NULL || *v != NULL){
+    return;
+  }
+  // First, go down as far left as we can
+  getKthSmallest(t->left, k, v);
+
+  // The return will place us as far left as we can go
+  // We use 'k' as a countdown to see if we've hit the kth smallest
+  // value
+  // In here we check if k == 0, if it is, we set our v
+  if (*k <= 0 && *v == NULL) {
+    *v = &(t->val);
+  }
+  // Next time we will meet the next smallest value, so decrement
+  // until K is less than 0, and it will eventually set V
+  *k = *k - 1;
+
+  // We have traversed down as far left as we can, go one step right,
+  // then go down as far left as we can again (we start at the top of this
+  // function)
+  getKthSmallest(t->right, k, v);
 
 }
 
@@ -162,7 +199,30 @@ void getKthSmallest(Tree t, int* k, int** v) {
    If v1 == 3, and v2 == 0, then their lowest common ancestor is 2
 */
 Tree lowestCommonAnc(Tree t, int v1, int v2) {
-  return NULL;
+  Tree res = NULL;
+  if (t == NULL) {
+    return res;
+  }
+  if(v1>v2){
+    if(findValue(t->left,v2) && findValue(t->right,v1)){
+      return t;
+    } else {
+      res = lowestCommonAnc(t->left,v1,v2);
+      if (res == NULL){
+        res = lowestCommonAnc(t->right,v1,v2);
+      }
+    }
+  } else if (v1 < v2){
+    if(findValue(t->right,v2) && findValue(t->left,v1)){
+      return t;
+    } else {
+      res = lowestCommonAnc(t->left,v1,v2);
+      if (res == NULL){
+        res = lowestCommonAnc(t->right,v1,v2);
+      }
+    }
+  }
+  return res;
 }
 
 

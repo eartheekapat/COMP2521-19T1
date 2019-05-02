@@ -45,14 +45,56 @@ typedef struct GraphRep {
 // a node is "connected" if it is reachable from the source vertex v
 
 int bfsConnected(Graph g, int v) {
-    return 0;
+    Queue q = newQueue();
+    int *visited = malloc(sizeof(int)*g->nV);
+    for (int i=1;i < g->nV;i++){
+      visited[i]=0;
+    }
+    enterQueue(q,v);
+    visited[v] = 1;
+    int connected = 0;
+    while(!emptyQueue(q)){
+      int item = leaveQueue(q);
+      for (int i=0;i < g->nV;i++){
+        if(g->edges[item][i] && !visited[i]){
+          visited[i] = 1;
+          enterQueue(q,i);
+          connected++;
+        }
+      }
+    }
+    return connected;
 }
 
 // write a function that takes a graph, a source vertex and a
 // destination vertex and finds the number of unique paths 
 // (that don't contain a cycle) from the source to the destination
+void countPath(Graph g, int src, int dest, int* visited, int* path){
+  visited[src] = 1;
+  if(src == dest){ 
+    *path = *path+1;
+  } else {
+    for( int i=0; i<g->nV; i++){
+      if(g->edges[src][i]){
+        if(!visited[i]){
+          countPath(g,i,dest,visited,path);
+        }
+      }
+    }
+  }
+  visited[src] = 0;                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+}
+
 int numPaths(Graph g, int src, int dest) {
-    return 0;
+
+    int *visited = malloc(sizeof(int)*g->nV);
+    for (int i=0;i < g->nV;i++){
+      visited[i]=0;
+    }
+    int a = 0;
+    int *path = &a;
+    countPath(g,src,dest,visited,path);
+    return *path;
 }
 
 // (13s1 final exam question)
