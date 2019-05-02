@@ -99,8 +99,31 @@ int numPaths(Graph g, int src, int dest) {
 
 // (13s1 final exam question)
 // write a function that takes a graph and returns the number of components
+void doDFS(Graph g, int compID, int *components, int v){
+  components[v] = compID; //mark as visited
+  for (int i=0; i<g->nV;i++){
+    if(g->edges[v][i]){
+      // If not visited do DFS on it
+      if(components[i]==-1){
+        doDFS(g,compID,components,i);
+      }
+    }
+  }
+}
+
 int numComponents(Graph g) {
-    return 0;
+    int *components = malloc(sizeof(int)*g->nV);
+    for (int i=0;i<g->nV;i++){
+      components[i] = -1;
+    }
+    int compID = 0;
+    for (int v=0; v<g->nV;v++){
+      if(components[v] == -1){
+        doDFS(g,compID,components,v);
+        compID++;
+      }
+    }
+    return compID;
 }
 
 
