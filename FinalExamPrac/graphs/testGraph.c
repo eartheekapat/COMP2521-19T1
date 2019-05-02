@@ -260,7 +260,9 @@ void testnumpaths(void) {
 
 int main() {
   testbfsConnected();
+  printf("Passed all tests for connected!!\n");
   testnumpaths();
+  printf("Passed all tests for numpaths!!\n");
   testNumComponents();
   testCycle();
   testWithin();

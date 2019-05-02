@@ -134,10 +134,41 @@ int numComponents(Graph g) {
  * the graph has a cycle, 0 otherwise
  *
  */
+void DFScycle(Graph g,int v,int* result,int* visited,int start){
+  if(*result){
+    return;
+  }
+  visited[v] = 1;
+  for(int i=0;i<=g->nV;i++){
+    if(g->edges[v][i]){
+      if(visited[i]==0){
+        DFScycle(g,i,result,visited,v);
+      } else {
+        if(i != start){
+          *result = 1; 
+          return;
+        }
+      }
+    }
+  }
+}
 
 int hasCycle(Graph g) {
-
-  return 0;
+    int *visited = malloc(sizeof(int)*g->nV);
+    int a = 0;
+    int *result = &a;
+    for (int i=0;i<g->nV;i++){
+      visited[i] = 0;
+    }
+    for (int v=0;v<g->nV;v++){
+      if(!*result){
+        DFScycle(g,v,result,visited,v);
+      }
+      for(int i=0;i<g->nV;i++){
+        visited[i] = 0;
+      }
+    }
+  return *result;
 }
 
 /*
