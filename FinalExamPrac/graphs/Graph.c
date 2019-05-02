@@ -82,7 +82,8 @@ void countPath(Graph g, int src, int dest, int* visited, int* path){
       }
     }
   }
-  visited[src] = 0;                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+  // Start clearing visited node so that more paths can be discovered
+  visited[src] = 0;                                                                                                                                                                                                                                                                                                                                                                                                                                    
 }
 
 int numPaths(Graph g, int src, int dest) {
@@ -184,8 +185,51 @@ int hasCycle(Graph g) {
  *  within(g,0,1,&n) ==> [0, 3, 1], n == 3
  */
 int* within(Graph g, int s, int d, int *size) {
-
-  return NULL;
+  *size = 0;
+  if(d==0){
+    return NULL;
+  }
+  int* answer = malloc(g->nV*sizeof(int));  //max case
+  //BFS seems like the best idea
+  Queue q = newQueue();
+  int* visited = calloc(g->nV,sizeof(int));
+  enterQueue(q,s);
+  while(!emptyQueue(q)){
+    int item = leaveQueue(q);
+    //printf("Dequeue %d\n",item);
+    for(int v=0;v<g->nV;v++){
+      if(g->edges[item][v]){
+        //printf("%d\n",v);
+        if(!visited[v]){
+          //printf("Hello %d\n",d);
+          visited[v]= visited[item]+1;
+          //printf("Visited[%d] = %d\n",v,visited[v]);
+          //printf("Put %d in queue\n",v);
+          enterQueue(q,v);
+        }
+      }
+    }
+    //printf("Erm\n");
+    visited[s] = 1;
+  }
+  answer[0] = s;
+  *size = *size+1;
+  int index=1;
+  for(int distance=1; distance<=d;distance++){
+    for(int i=0;i<g->nV;i++){
+      //printf("Vertex %d: %d\n",i,visited[i]);
+      if(i!=s && distance == visited[i]){
+        answer[index] = i;
+        index++;
+        *size = *size+1;
+      }
+    }
+  }
+  answer = realloc(answer,(*size)*sizeof(int));
+  for(int i=0;i<*size;i++){
+      //printf("Answer %d: %d\n",i,answer[i]);
+  }
+  return answer;
 } 
 
 
@@ -202,10 +246,30 @@ int* within(Graph g, int s, int d, int *size) {
 // [0, 0, 1, 1]
 // i.e. vertices 0 and 1 are in the first connected component (represented by 0 in the array), and
 // vertices 2 and 3 are in the second connected component (represented by 1)
+void doDFScomponents(Graph g, int compID, int v, int *components){
+  components[v] = compID;
+  for(int i=0;i<g->nV;i++){
+    if(g->edges[v][i]){
+      if(components[i] == -1){
+        doDFScomponents(g,compID,i,components);
+      }
+    }
+  }
+}
 
 int *components(Graph g) {
-
-  return NULL;
+  int* components = malloc(g->nV*sizeof(int));
+  for(int i=0;i<g->nV;i++){
+    components[i]=-1;
+  }
+  int compID = 0;
+  for(int v=0;v<g->nV;v++){
+    if(components[v]==-1){
+      doDFScomponents(g,compID,v,components);
+      compID++;
+    }
+  }
+  return components;
 }
 
 
