@@ -113,10 +113,48 @@ void  removeE(Graph g, Edge e)
 
 // wellConnected ... list of vertices
 // - ordered on #connections, most connected first
+
+static void swap(Connects *xp, Connects* yp){
+   Connects temp = *xp; 
+   *xp = *yp; 
+   *yp = temp; 
+}
+
+static void selectionSort(Connects *conn, Graph g){
+   int i,j,max_idx;
+
+   for(i=0;i<g->nV-1;i++){
+      max_idx = i;
+      for(j = i+1; j<g->nV;j++){
+         if(conn[j].nconn>conn[max_idx].nconn){
+            max_idx = j;
+         }
+      }
+      swap(&conn[max_idx],&conn[i]);
+   }
+}
+
+
 Connects *wellConnected(Graph g, int *nconns)
 {
    assert(g != NULL && nconns != NULL);
    // TODO: replace the two lines below
    *nconns = 0;
-   return NULL;
+   Connects *conn = malloc(g->nV*sizeof(Connects));
+
+   for(int i=0;i<g->nV;i++){
+      conn[i].nconn = 0;
+      conn[i].vertx = i;
+      for(int j=0;j<g->nV;j++){
+         if(g->edges[i][j]){
+            conn[i].nconn++;
+         }
+      }
+      if(conn[i].nconn >= 2){
+         *nconns = *nconns + 1;
+      }
+   }
+   //sorting
+   selectionSort(conn,g);
+   return conn;
 }
