@@ -120,19 +120,19 @@ static void swap(Connects *xp, Connects* yp){
    *yp = temp; 
 }
 
-static void selectionSort(Connects *conn, Graph g){
-   int i,j,max_idx;
+// static void selectionSort(Connects *conn, Graph g){
+//    int i,j,max_idx;
 
-   for(i=0;i<g->nV-1;i++){
-      max_idx = i;
-      for(j = i+1; j<g->nV;j++){
-         if(conn[j].nconn>conn[max_idx].nconn){
-            max_idx = j;
-         }
-      }
-      swap(&conn[max_idx],&conn[i]);
-   }
-}
+//    for(i=0;i<g->nV-1;i++){
+//       max_idx = i;
+//       for(j = i+1; j<g->nV;j++){
+//          if(conn[j].nconn>conn[max_idx].nconn){
+//             max_idx = j;
+//          }
+//       }
+//       swap(&conn[max_idx],&conn[i]);
+//    }
+// }
 
 
 Connects *wellConnected(Graph g, int *nconns)
@@ -155,6 +155,19 @@ Connects *wellConnected(Graph g, int *nconns)
       }
    }
    //sorting
-   selectionSort(conn,g);
+   //selectionSort(conn,g);
+   for(int i=0; i<g->nV; i++){
+      int nswap = 0;
+      for(int j = g->nV-1; j>0; j--){
+         if(conn[j].nconn>conn[j-1].nconn){
+            swap(&conn[j],&conn[j-1]);
+            nswap++;
+         }
+      }
+
+      if(nswap == 0){
+         break;
+      }
+   }
    return conn;
 }
