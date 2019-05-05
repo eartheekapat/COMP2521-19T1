@@ -113,9 +113,32 @@ void  removeE(Graph g, Edge e)
 	g->nE--;
 }
 
+static void doDFS(Graph g, int* visited, int compID,int vertex){
+	visited[vertex] = compID;
+	for(int i=0;i<g->nV;i++){
+		if(g->edges[vertex][i]){
+			if(visited[i]==-1){
+				doDFS(g,visited,compID,i);
+			}
+		}
+	} 
+}
+
 // nComponents ... number of connected components
 int nComponents(Graph g)
-{
-	// TODO
-	return 0; // remove this line
+{	
+	int size = g->nV;
+	int *visited = malloc(g->nV*sizeof(int));
+	int i;
+	for (i=0;i<size;i++){
+		visited[i] = -1;
+	}
+	int compID = 0;
+	for (i=0;i<size;i++){
+		if(visited[i]==-1){
+			doDFS(g,visited,compID,i);
+			compID++;
+		}
+	}
+	return compID; // remove this line
 }
