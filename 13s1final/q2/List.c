@@ -70,5 +70,37 @@ void ListAppend(List L, int value)
 // ListReverse ... reverse a List
 void ListReverse(List L)
 {
-	// TODO
+	if(L->nnodes == 0) {
+		return;
+	}
+	int *arr = malloc(sizeof(int)*L->nnodes);
+	Link curr = L->first;
+
+	int i = 0;
+	while(curr!=NULL){
+		arr[i] = curr->value;
+		//printf("%d\n",curr->value);
+		//printf("Arr %d\n",arr[i]);
+		curr = curr->next;
+		i++;
+		
+	}
+	List new = newList();
+	for(i=L->nnodes-1;i>=0;i--){
+		//printf("Arr %d\n",arr[i]);
+		ListAppend(new,arr[i]);
+	}
+	free(arr);
+	List temp = L;
+	curr = temp->first;
+	while(curr!=NULL){
+		Link temp1 = curr->next;
+		free(curr);
+		curr = temp1;
+	}
+	free(temp);
+	L->first = new->first;
+	L->last = new->last;
+	L->nnodes = new->nnodes;
+	//free(temp);
 }
