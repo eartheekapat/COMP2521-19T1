@@ -83,7 +83,7 @@ void countPath(Graph g, int src, int dest, int* visited, int* path){
     }
   }
   // Start clearing visited node so that more paths can be discovered
-  visited[src] = 0;                                                                                                                                                                                                                                                                                                                                                                                                                                    
+  visited[src] = 0;
 }
 
 int numPaths(Graph g, int src, int dest) {

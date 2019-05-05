@@ -28,6 +28,7 @@ struct tree {
 };
 // Added helpers
 
+/*
 static int maxTree(Tree t) {
   if (t == NULL) {
     return -1;
@@ -49,7 +50,7 @@ static int minTree(Tree t) {
   if(resL < res && resL != -1 ) { res = resL; }
   if(resR < res && resR != -1 ) { res = resR; }
   return res;
-}
+}*/
 
 Tree min(Tree t){
   return (t->left)? min(t->left) : t;
@@ -95,28 +96,21 @@ void map(Tree t, int (*f)(int)) {
     map(t->right,f);
 }
 
+int isActuallyBST(Tree t,int min, int max) {
+  if (t == NULL){
+    return 1;
+  }
+    if(t->val < min || t->val > max) { return 0; }
+    
+    return isActuallyBST(t->left,min,t->val) && isActuallyBST(t->right,t->val,max);
+}
+
 // Check to see if the given tree is actually a BST
 // The rule is that from some arbitrary root, the left child's value must be
 // smaller than the root, and the right child bigger
 // return 0 if it isn't a BST, 1 if it is
 int isBST(Tree t) {
-  if (t == NULL){
-    return 1;
-  }
-  // Check left subtree
-  if ( t->left != NULL && t->val < maxTree(t->left) ) {
-    return 0;
-  }
-
-  // Check right subtree
-  if ( t->right != NULL && t->val > minTree(t->right) ) {
-    return 0;
-  }
-  if (isBST(t->left) && isBST(t->right)) {
-    return 1;
-  } else {
-    return 0;
-  }
+    return isActuallyBST(t,-10000000,10000000);
 }
 
 
