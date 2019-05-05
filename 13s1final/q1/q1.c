@@ -40,5 +40,13 @@ int ArrayMax(int a[], int n)
 int max(int a[], int lo, int hi)
 {
 	// TODO
-	return 0; // remove this line
+	if(lo>=hi){
+		return (a[lo]>a[hi])? a[lo] : a[hi];
+	} else {
+		int mid = (lo+hi)/2;
+		int left = max(a,lo,mid);
+		int right = max(a,mid+1,hi);
+		return (left>right)? left:right;
+	}
+	
 }
